@@ -2,14 +2,15 @@ import requests
 import datetime
 import certifi
 import urllib3
+import openpyxl
 import os
 
 urllib3.disable_warnings()
 
 
-def get_data_xlsx():
+def get_data_from_site():
     """
-    Получение данных в формате xlsx
+    Получение данных с сайта и сохранение в формате xlsx
     :return:
     """
 
@@ -25,3 +26,36 @@ def get_data_xlsx():
     # response = requests.get(url, headers=headers, timeout=5, verify=certifi.where())
     with open(f'./src/kazaki {date_now}.xlsx', 'wb') as output:
         output.write(response.content)
+
+
+def reading_xlsx_file():
+    """
+    Чтение файла в формате xlsx
+    :return:
+    """
+
+    # считываем данные из файла
+    work_book = openpyxl.load_workbook("./src/test_kazaki_1.xlsx")
+
+    # получаем активный лист
+    work_sheet = work_book.active
+
+    # создаем список для хранения данных
+    data_list = []
+
+    # считываем данные ячеек
+    for line in range(1, work_sheet.max_row):
+        new_line = []
+        for col in work_sheet.iter_cols(1, work_sheet.max_column):
+
+            new_line.append(str(col[line].value))
+
+        data_list.append(new_line)
+
+    for i in data_list:
+        print(i)
+
+
+if __name__ == '__main__':
+    reading_xlsx_file()
+
