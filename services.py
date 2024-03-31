@@ -43,14 +43,22 @@ def reading_xlsx_file():
     # создаем список для хранения данных
     data_list = []
 
-    # считываем данные ячеек
-    for line in range(1, work_sheet.max_row):
-        new_line = []
-        for col in work_sheet.iter_cols(1, work_sheet.max_column):
+    # перебираем строки
+    for line in range(1, work_sheet.max_row + 1):
 
-            new_line.append(str(col[line].value))
+        # проверяем параметры добавления данных в список
+        if work_sheet[f'A{line}'].value == 'Реестр казачьих обществ':
 
-        data_list.append(new_line)
+            new_line = []  # создаем новый список
+
+            # считываем данные ячеек
+            for col in work_sheet.iter_cols(1, work_sheet.max_column):
+
+                # добавляем данные ячейки в список
+                new_line.append(str(col[line - 1].value).replace('\xa0', ' '))
+
+            # добавляем список с данными строки в общий список
+            data_list.append(new_line)
 
     for i in data_list:
         print(i)
