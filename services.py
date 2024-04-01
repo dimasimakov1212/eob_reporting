@@ -60,10 +60,13 @@ def reading_xlsx_file():
             # добавляем список с данными строки в общий список
             data_list.append(new_line)
 
-    for i in data_list:
-        print(i)
+    # for i in data_list:
+    #     print(i)
+
+    return data_list
 
 
 if __name__ == '__main__':
+
     reading_xlsx_file()
 
